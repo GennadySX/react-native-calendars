@@ -49,8 +49,7 @@ export default function styleConstructor(theme = {}, calendarHeight) {
     event: {
       position: 'absolute',
       backgroundColor: '#F0F4FF',
-      borderColor: '#DDE5FD',
-      borderWidth: 1,
+      borderRadius: 3,
       paddingLeft: 4,
       minHeight: 25,
       flex: 1,

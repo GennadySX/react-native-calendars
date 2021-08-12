@@ -30,6 +30,7 @@ enum Positions {
 const SPEED = 20;
 const BOUNCINESS = 6;
 const CLOSED_HEIGHT = 120; // header + 1 week
+const CLOSED_HEIGHT_ONLY_MONTH = 80; // only header
 const WEEK_HEIGHT = 46;
 const KNOB_CONTAINER_HEIGHT = 20;
 const DAY_NAMES_PADDING = 24;
@@ -60,6 +61,7 @@ export interface Props extends CalendarListProps {
   /** a threshold for closing the calendar with the pan gesture */
   closeThreshold?: number;
   context?: any;
+  onlyMonth?: boolean
 }
 export type ExpandableCalendarProps = Props;
 
@@ -101,7 +103,9 @@ class ExpandableCalendar extends Component<Props, State> {
     /** a threshold for opening the calendar with the pan gesture */
     openThreshold: PropTypes.number,
     /** a threshold for closing the calendar with the pan gesture */
-    closeThreshold: PropTypes.number
+    closeThreshold: PropTypes.number,
+    /** an option to show only month in header */
+    onlyMonth: PropTypes.bool
   };
 
   static defaultProps = {
@@ -112,7 +116,8 @@ class ExpandableCalendar extends Component<Props, State> {
     rightArrowImageSource: RIGHT_ARROW,
     allowShadow: true,
     openThreshold: PAN_GESTURE_THRESHOLD,
-    closeThreshold: PAN_GESTURE_THRESHOLD
+    closeThreshold: PAN_GESTURE_THRESHOLD,
+    onlyMonth: false
   };
 
   static positions = Positions;
@@ -143,7 +148,7 @@ class ExpandableCalendar extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     
-    this.closedHeight = CLOSED_HEIGHT + (props.hideKnob ? 0 : KNOB_CONTAINER_HEIGHT);
+    this.closedHeight = this.props.onlyMonth ? CLOSED_HEIGHT_ONLY_MONTH : CLOSED_HEIGHT + (props.hideKnob ? 0 : KNOB_CONTAINER_HEIGHT);
     this.numberOfWeeks = this.getNumberOfWeeksInMonth(new XDate(this.props.context.date));
     this.openHeight = this.getOpenHeight();
 
@@ -255,7 +260,7 @@ class ExpandableCalendar extends Component<Props, State> {
     if (!this.props.horizontal) {
       return Math.max(commons.screenHeight, commons.screenWidth);
     }
-    return CLOSED_HEIGHT + WEEK_HEIGHT * (this.numberOfWeeks - 1) + (this.props.hideKnob ? 12 : KNOB_CONTAINER_HEIGHT);
+    return (this.props.onlyMonth ? CLOSED_HEIGHT_ONLY_MONTH: CLOSED_HEIGHT) + WEEK_HEIGHT * (this.props.onlyMonth ? this.numberOfWeeks : this.numberOfWeeks - 1) + (this.props.hideKnob ? 12 : KNOB_CONTAINER_HEIGHT);
   }
 
   getYear(date: Date) {
@@ -543,7 +548,7 @@ class ExpandableCalendar extends Component<Props, State> {
   };
 
   render() {
-    const {style, hideKnob, horizontal, allowShadow, theme, ...others} = this.props;
+    const {style, hideKnob, horizontal, allowShadow, theme, onlyMonth, ...others} = this.props;
     const {deltaY, position, screenReaderEnabled} = this.state;
     const isOpen = position === Positions.OPEN;
     const themeObject = Object.assign(this.headerStyleOverride, theme);
@@ -579,7 +584,7 @@ class ExpandableCalendar extends Component<Props, State> {
               renderArrow={this.renderArrow}
               staticHeader
             />
-            {horizontal && this.renderWeekCalendar()}
+            {horizontal && !onlyMonth && this.renderWeekCalendar()}
             {!hideKnob && this.renderKnob()}
             {!horizontal && this.renderHeader()}
           </Animated.View>

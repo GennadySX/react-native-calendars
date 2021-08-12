@@ -10,22 +10,22 @@ const EVENTS = [
     start: '2017-09-06 22:30:00',
     end: '2017-09-06 23:30:00',
     title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-    color: '#e6add8'
+    summary: '3412 Piedmont Rd NE, GA 3032'
+    // color: '#e6add8'
   },
   {
     start: '2017-09-07 00:30:00',
     end: '2017-09-07 01:30:00',
     title: 'Visit Grand Mother',
-    summary: 'Visit Grand Mother and bring some fruits.',
-    color: '#ade6d8'
+    summary: 'Visit Grand Mother and bring some fruits.'
+    // color: '#ade6d8'
   },
   {
     start: '2017-09-07 02:30:00',
     end: '2017-09-07 03:20:00',
     title: 'Meeting with Prof. Behjet Zuhaira',
-    summary: 'Meeting with Prof. Behjet at 130 in her office.',
-    color: '#e6add8'
+    summary: 'Meeting with Prof. Behjet at 130 in her office.'
+    // color: '#e6add8'
   },
   {
     start: '2017-09-07 04:10:00',
@@ -191,6 +191,7 @@ export default class TimelineCalendarScreen extends Component {
           // calendarStyle={styles.calendar}
           // headerStyle={styles.calendar} // for horizontal only
           // disableWeekScroll
+          onlyMonth={true}
         />
         <Timeline
           format24h={true}
