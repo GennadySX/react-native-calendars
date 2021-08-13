@@ -88,6 +88,13 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       backgroundColor: 'rgb(216,216,216)',
       ...theme.line
     },
+    lineHorizontal: {
+      height: 1,
+      position: 'absolute',
+      left: 3,
+      backgroundColor: 'rgb(216,216,216)',
+      transform: [{rotate: '90deg'}]
+    },
     lineNow: {
       height: 1,
       position: 'absolute',
@@ -98,10 +105,10 @@ export default function styleConstructor(theme = {}, calendarHeight) {
     timeLabel: {
       position: 'absolute',
       left: 15,
-      color: 'rgb(170,170,170)',
+      color: '#333333',
       fontSize: 10,
       fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : 'Roboto',
-      fontWeight: '500',
+      fontWeight: '700',
       ...theme.timeLabel
     }
   };

@@ -34,6 +34,12 @@ const EVENTS = [
     summary: 'Tea Time with Dr. Hasan, Talk about Project'
   },
   {
+    start: '2017-09-07 00:05:00',
+    end: '2017-09-07 01:15:00',
+    title: 'Dr. Susanna Joseph',
+    summary: '3412 Piedmont Rd NE, GA 3032'
+  },
+  {
     start: '2017-09-07 01:05:00',
     end: '2017-09-07 01:35:00',
     title: 'Dr. Mariana Joseph',
@@ -191,10 +197,11 @@ export default class TimelineCalendarScreen extends Component {
           // calendarStyle={styles.calendar}
           // headerStyle={styles.calendar} // for horizontal only
           // disableWeekScroll
-          onlyMonth={true}
+          onlyMonth={false}
+          monthFormat={"MMMM '|' yyyy"}
         />
         <Timeline
-          format24h={true}
+          // format24h={true}
           eventTapped={e => e}
           events={EVENTS.filter(event => sameDate(XDate(event.start), XDate(this.state.currentDate)))}
           // scrollToFirst={true}

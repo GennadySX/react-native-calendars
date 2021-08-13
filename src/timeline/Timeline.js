@@ -6,6 +6,9 @@ import React from 'react';
 import {View, Text, ScrollView, TouchableOpacity, Dimensions} from 'react-native';
 import styleConstructor from './style';
 import populateEvents from './Packer';
+import {isToday} from '../dateutils';
+import NowLine from './now-line/NowLine';
+import asCalendarConsumer from '../expandableCalendar/asCalendarConsumer';
 
 const LEFT_MARGIN = 60 - 1;
 const TEXT_LINE_HEIGHT = 17;
@@ -16,7 +19,7 @@ function range(from, to) {
 
 let {width: dimensionWidth} = Dimensions.get('window');
 
-export default class Timeline extends React.PureComponent {
+class Timeline extends React.PureComponent {
   static propTypes = {
     start: PropTypes.number,
     end: PropTypes.number,
@@ -92,12 +95,16 @@ export default class Timeline extends React.PureComponent {
     const offset = this.calendarHeight / (end - start);
     const EVENT_DIFF = 20;
 
+    const {date} = this.props.context;
+
     return range(start, end + 1).map((i, index) => {
       let timeText;
 
       if (i === start) {
         timeText = '';
-      } else if (i < 12) {
+      } else if (i < 10) {
+        timeText = !format24h ? `0${i} AM` : `0${i}:00`;
+      } else if (i >= 10 && i < 12) {
         timeText = !format24h ? `${i} AM` : `${i}:00`;
       } else if (i === 12) {
         timeText = !format24h ? `${i} PM` : `${i}:00`;
@@ -114,9 +121,14 @@ export default class Timeline extends React.PureComponent {
         i === start ? null : (
           <View key={`line${i}`} style={[this.style.line, {top: offset * index, width: dimensionWidth - EVENT_DIFF}]} />
         ),
+        isToday(date) && <NowLine offset={offset / 2} />,
         <View
           key={`lineHalf${i}`}
           style={[this.style.line, {top: offset * (index + 0.5), width: dimensionWidth - EVENT_DIFF}]}
+        />,
+        <View
+          key={`lineHorizontal${i}`}
+          style={[this.style.lineHorizontal, {top: offset * (index + 0.5), width: offset}]}
         />
       ];
     });
@@ -193,3 +205,5 @@ export default class Timeline extends React.PureComponent {
     );
   }
 }
+
+export default asCalendarConsumer(Timeline);

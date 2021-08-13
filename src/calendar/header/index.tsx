@@ -4,7 +4,18 @@ import memoize from 'memoize-one';
 import XDate from 'xdate';
 
 import React, {Component, Fragment, ReactNode} from 'react';
-import {ActivityIndicator, Platform, View, Text, TouchableOpacity, Image, StyleProp, ViewStyle, AccessibilityActionEvent, ColorValue} from 'react-native';
+import {
+  ActivityIndicator,
+  Platform,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleProp,
+  ViewStyle,
+  AccessibilityActionEvent,
+  ColorValue
+} from 'react-native';
 // @ts-expect-error
 import {shouldUpdate} from '../../component-updater';
 // @ts-expect-error
