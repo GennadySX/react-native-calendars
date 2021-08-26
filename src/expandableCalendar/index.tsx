@@ -4,7 +4,20 @@ import memoize from 'memoize-one';
 import XDate from 'xdate';
 
 import React, {Component} from 'react';
-import {AccessibilityInfo, PanResponder, Animated, View, ViewStyle, Text, Image, ImageSourcePropType, PanResponderInstance, GestureResponderEvent, PanResponderGestureState} from 'react-native';
+import {
+  AccessibilityInfo,
+  PanResponder,
+  Animated,
+  View,
+  ViewStyle,
+  Text,
+  Image,
+  ImageSourcePropType,
+  PanResponderInstance,
+  GestureResponderEvent,
+  PanResponderGestureState,
+  TouchableOpacity
+} from 'react-native';
 
 // @ts-expect-error
 import {CALENDAR_KNOB} from '../testIDs';
@@ -19,7 +32,6 @@ import Calendar from '../calendar';
 import asCalendarConsumer from './asCalendarConsumer';
 import WeekCalendar from './WeekCalendar';
 import Week from './week';
-
 
 const commons = require('./commons');
 const updateSources = commons.UpdateSources;
@@ -37,7 +49,6 @@ const DAY_NAMES_PADDING = 24;
 const PAN_GESTURE_THRESHOLD = 30;
 const LEFT_ARROW = require('../calendar/img/previous.png');
 const RIGHT_ARROW = require('../calendar/img/next.png');
-
 
 export interface Props extends CalendarListProps {
   /** the initial position of the calendar ('open' or 'closed') */
@@ -61,7 +72,7 @@ export interface Props extends CalendarListProps {
   /** a threshold for closing the calendar with the pan gesture */
   closeThreshold?: number;
   context?: any;
-  onlyMonth?: boolean
+  onlyMonth?: boolean;
 }
 export type ExpandableCalendarProps = Props;
 
@@ -130,7 +141,7 @@ class ExpandableCalendar extends Component<Props, State> {
   _height: number;
   _wrapperStyles: {
     style: ViewStyle;
-  }
+  };
   _headerStyles: {
     style: ViewStyle;
   };
@@ -147,8 +158,10 @@ class ExpandableCalendar extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    
-    this.closedHeight = this.props.onlyMonth ? CLOSED_HEIGHT_ONLY_MONTH : CLOSED_HEIGHT + (props.hideKnob ? 0 : KNOB_CONTAINER_HEIGHT);
+
+    this.closedHeight = this.props.onlyMonth
+      ? CLOSED_HEIGHT_ONLY_MONTH
+      : CLOSED_HEIGHT + (props.hideKnob ? 0 : KNOB_CONTAINER_HEIGHT);
     this.numberOfWeeks = this.getNumberOfWeeksInMonth(new XDate(this.props.context.date));
     this.openHeight = this.getOpenHeight();
 
@@ -216,7 +229,7 @@ class ExpandableCalendar extends Component<Props, State> {
 
   updateNativeStyles() {
     this.wrapper?.current?.setNativeProps(this._wrapperStyles);
-    
+
     if (!this.props.horizontal) {
       this.header?.current?.setNativeProps(this._headerStyles);
     } else {
@@ -260,7 +273,11 @@ class ExpandableCalendar extends Component<Props, State> {
     if (!this.props.horizontal) {
       return Math.max(commons.screenHeight, commons.screenWidth);
     }
-    return (this.props.onlyMonth ? CLOSED_HEIGHT_ONLY_MONTH: CLOSED_HEIGHT) + WEEK_HEIGHT * (this.props.onlyMonth ? this.numberOfWeeks : this.numberOfWeeks - 1) + (this.props.hideKnob ? 12 : KNOB_CONTAINER_HEIGHT);
+    return (
+      (this.props.onlyMonth ? CLOSED_HEIGHT_ONLY_MONTH : CLOSED_HEIGHT) +
+      WEEK_HEIGHT * (this.props.onlyMonth ? this.numberOfWeeks : this.numberOfWeeks - 1) +
+      (this.props.hideKnob ? 12 : KNOB_CONTAINER_HEIGHT)
+    );
   }
 
   getYear(date: Date) {
@@ -501,7 +518,7 @@ class ExpandableCalendar extends Component<Props, State> {
     const {disableWeekScroll} = this.props;
     const WeekComponent = disableWeekScroll ? Week : WeekCalendar;
     const weekCalendarProps = disableWeekScroll ? undefined : {allowShadow: false};
-    
+
     return (
       <Animated.View
         ref={this.weekCalendar}
@@ -522,12 +539,29 @@ class ExpandableCalendar extends Component<Props, State> {
     );
   }
 
+  // renderKnob() {
+  //   // TODO: turn to TouchableOpacity with onPress that closes it
+  //   return (
+  //     <View style={this.style.knobContainer} pointerEvents={'none'} testID={`${this.props.testID}-knob`}>
+  //       <View style={this.style.knob} testID={CALENDAR_KNOB} />
+  //     </View>
+  //   );
+  // }
+
   renderKnob() {
-    // TODO: turn to TouchableOpacity with onPress that closes it
+    const {position} = this.state;
     return (
-      <View style={this.style.knobContainer} pointerEvents={'none'} testID={`${this.props.testID}-knob`}>
+      <TouchableOpacity
+        style={this.style.knobContainer}
+        onPress={() =>
+          position === Positions.OPEN
+            ? this.setState({position: Positions.CLOSED, deltaY: new Animated.Value(this.closedHeight)})
+            : this.setState({position: Positions.OPEN, deltaY: new Animated.Value(this.openHeight)})
+        }
+        testID={`${this.props.testID}-knob`}
+      >
         <View style={this.style.knob} testID={CALENDAR_KNOB} />
-      </View>
+      </TouchableOpacity>
     );
   }
 
