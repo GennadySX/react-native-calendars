@@ -9,6 +9,7 @@ import populateEvents from './Packer';
 import {isToday} from '../dateutils';
 import NowLine from './now-line/NowLine';
 import asCalendarConsumer from '../expandableCalendar/asCalendarConsumer';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const LEFT_MARGIN = 60 - 1;
 const TEXT_LINE_HEIGHT = 17;
@@ -25,6 +26,8 @@ class Timeline extends React.PureComponent {
     end: PropTypes.number,
     eventTapped: PropTypes.func,
     format24h: PropTypes.bool,
+    onSwipeLeft: PropTypes.func,
+    onSwipeRight: PropTypes.func,
     events: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.string.isRequired,
@@ -193,14 +196,27 @@ class Timeline extends React.PureComponent {
     );
   }
 
+  onDayPress(value) {
+    // {year: 2019, month: 4, day: 22, timestamp: 1555977600000, dateString: "2019-04-23"}
+    _.invoke(this.props.context, 'setDate', value.toISOString().split('T')[0], 'PAGE_SCROLL');
+  }
+
   render() {
+    const {date} = this.props.context;
     return (
       <ScrollView
         ref={ref => (this._scrollView = ref)}
         contentContainerStyle={[this.style.contentStyle, {width: dimensionWidth}]}
       >
-        {this._renderLines()}
-        {this._renderEvents()}
+        <GestureRecognizer
+          onSwipeLeft={() => this.onDayPress(new Date(new Date(date).getTime() + 1000 * 60 * 60 * 24))}
+          onSwipeRight={() => this.onDayPress(new Date(new Date(date).getTime() - 1000 * 60 * 60 * 24))}
+        >
+          <View style={{height: this.calendarHeight}}>
+            {this._renderLines()}
+            {this._renderEvents()}
+          </View>
+        </GestureRecognizer>
       </ScrollView>
     );
   }
