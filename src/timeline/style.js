@@ -110,7 +110,9 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : 'Roboto',
       fontWeight: '700',
       ...theme.timeLabel
-    }
+    },
+    timeLinesContainer: {borderWidth: 1, borderColor: 'transparent'},
+    blankSpaceBorder: {position: 'absolute', borderWidth: 2, borderRadius: 3, backgroundColor: 'rgba(52, 52, 52, 0.0)'}
   };
   return StyleSheet.create(style);
 }

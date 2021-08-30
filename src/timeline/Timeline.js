@@ -3,7 +3,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
 import React from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Dimensions} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Dimensions, TouchableWithoutFeedback} from 'react-native';
 import styleConstructor from './style';
 import populateEvents from './Packer';
 import {isToday} from '../dateutils';
@@ -25,9 +25,8 @@ class Timeline extends React.PureComponent {
     start: PropTypes.number,
     end: PropTypes.number,
     eventTapped: PropTypes.func,
+    blankSpaceTapped: PropTypes.func,
     format24h: PropTypes.bool,
-    onSwipeLeft: PropTypes.func,
-    onSwipeRight: PropTypes.func,
     events: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.string.isRequired,
@@ -61,7 +60,8 @@ class Timeline extends React.PureComponent {
 
     this.state = {
       _scrollY: verifiedInitPosition,
-      packedEvents
+      packedEvents,
+      clickedIndex: -1
     };
   }
 
@@ -93,8 +93,16 @@ class Timeline extends React.PureComponent {
     }, 1);
   }
 
+  _onBlankSpaceTapped(index) {
+    this.setState({clickedIndex: this.state.clickedIndex === index ? -1 : index});
+    if (this.props.blankSpaceTapped) {
+      this.props.blankSpaceTapped(index);
+    }
+  }
+
   _renderLines() {
     const {format24h, start = 0, end = 24} = this.props;
+    const {clickedIndex} = this.state;
     const offset = this.calendarHeight / (end - start);
     const EVENT_DIFF = 20;
 
@@ -125,6 +133,21 @@ class Timeline extends React.PureComponent {
           <View key={`line${i}`} style={[this.style.line, {top: offset * index, width: dimensionWidth - EVENT_DIFF}]} />
         ),
         isToday(date) && <NowLine offset={offset / 2} />,
+        <TouchableWithoutFeedback key={`touch${i}`} onPress={() => this._onBlankSpaceTapped(index)}>
+          <View
+            style={[
+              this.style.blankSpaceBorder,
+              // eslint-disable-next-line react-native/no-inline-styles
+              {
+                top: offset * index,
+                width: dimensionWidth - LEFT_MARGIN - 5,
+                marginLeft: LEFT_MARGIN,
+                borderColor: clickedIndex === index ? '#FE41C8' : 'transparent',
+                height: offset
+              }
+            ]}
+          />
+        </TouchableWithoutFeedback>,
         <View
           key={`lineHalf${i}`}
           style={[this.style.line, {top: offset * (index + 0.5), width: dimensionWidth - EVENT_DIFF}]}
@@ -212,7 +235,8 @@ class Timeline extends React.PureComponent {
           onSwipeLeft={() => this.onDayPress(new Date(new Date(date).getTime() + 1000 * 60 * 60 * 24))}
           onSwipeRight={() => this.onDayPress(new Date(new Date(date).getTime() - 1000 * 60 * 60 * 24))}
         >
-          <View style={{height: this.calendarHeight}}>
+          {/* eslint-disable-next-line react-native/no-inline-styles */}
+          <View style={{height: this.calendarHeight, borderWidth: 1, borderColor: 'transparent'}}>
             {this._renderLines()}
             {this._renderEvents()}
           </View>
