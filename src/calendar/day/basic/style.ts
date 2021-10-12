@@ -28,7 +28,7 @@ export default function styleConstructor(theme: Theme = {}) {
     },
     selected: {
       backgroundColor: appStyle.selectedDayBackgroundColor,
-      borderRadius: 3
+      borderRadius: 10
     },
     today: {
       backgroundColor: appStyle.todayBackgroundColor,

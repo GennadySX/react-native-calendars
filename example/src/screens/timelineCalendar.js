@@ -2,7 +2,7 @@ import _ from 'lodash';
 import XDate from 'xdate';
 import React, {Component} from 'react';
 import {Platform, StyleSheet, View, Text, TouchableOpacity, Button} from 'react-native';
-import {ExpandableCalendar, Timeline, CalendarProvider} from 'react-native-calendars';
+import {ExpandableCalendar, Timeline, CalendarProvider} from '../../../src';
 import {sameDate} from '../../../src/dateutils';
 
 const EVENTS = [

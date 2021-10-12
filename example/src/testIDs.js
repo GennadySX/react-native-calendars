@@ -6,7 +6,8 @@ module.exports = {
     HORIZONTAL_LIST: 'horizontal_list_btn',
     AGENDA: 'agenda_btn',
     EXPANDABLE_CALENDAR: 'expandable_calendar_btn',
-    WEEK_CALENDAR: 'week_calendar_btn'
+    WEEK_CALENDAR: 'week_calendar_btn',
+    TIMELINE: 'timeline_btn'
   },
   calendars: {
     CONTAINER: 'calendars',

@@ -52,6 +52,13 @@ export default class MenuScreen extends Component {
           >
             <Text style={styles.menuText}>Week Calendar</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            testID={testIDs.menu.TIMELINE}
+            style={styles.menu}
+            onPress={this.onTimelinePress.bind(this)}
+          >
+            <Text style={styles.menuText}>Timeline Calendar</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );

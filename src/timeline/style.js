@@ -112,7 +112,33 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       ...theme.timeLabel
     },
     timeLinesContainer: {borderWidth: 1, borderColor: 'transparent'},
-    blankSpaceBorder: {position: 'absolute', borderWidth: 2, borderRadius: 3, backgroundColor: 'rgba(52, 52, 52, 0.0)'}
+    blankSpaceBorder: {
+      position: 'absolute',
+      borderWidth: 2,
+      borderBottomLeftRadius: 10,
+      borderTopRightRadius: 10,
+      backgroundColor: 'rgba(52, 52, 52, 0.0)'
+    },
+    dotButtonLeft: {
+      position: 'absolute',
+      left: -7,
+      width: 14,
+      height: 14,
+      backgroundColor: '#DD6390',
+      borderRadius: 6,
+      borderColor: 'rgb(231, 173, 195)',
+      borderWidth: 3
+    },
+    dotButtonRight: {
+      position: 'absolute',
+      right: -7,
+      width: 14,
+      height: 14,
+      backgroundColor: '#DD6390',
+      borderRadius: 6,
+      borderColor: 'rgb(231, 173, 195)',
+      borderWidth: 3
+    }
   };
   return StyleSheet.create(style);
 }
