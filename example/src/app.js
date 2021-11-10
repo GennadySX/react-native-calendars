@@ -2,7 +2,7 @@ import './wdyr'; // <--- must be first import
 
 import {Navigation} from 'react-native-navigation';
 // import {I18nManager} from 'react-native'; // <--- In order to test RTL
-import {LocaleConfig} from 'react-native-calendars';
+import {LocaleConfig} from '../../src/index';
 import {registerScreens} from './screens';
 
 // I18nManager.forceRTL(true); // <--- In order to test RTL

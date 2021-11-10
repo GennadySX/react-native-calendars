@@ -1,7 +1,7 @@
 import React, {useState, Fragment} from 'react';
 import {StyleSheet, View, ScrollView, Text, TouchableOpacity, Switch} from 'react-native';
 // @ts-expect-error
-import {Calendar} from 'react-native-calendars';
+import {Calendar} from '../../../src';
 
 const testIDs = require('../testIDs');
 const INITIAL_DATE = '2020-02-02';

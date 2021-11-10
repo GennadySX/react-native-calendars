@@ -1,6 +1,6 @@
 {
-  "name": "react-native-calendars",
-  "version": "1.22.0",
+  "name": "@anatolyk/react-native-calendars",
+  "version": "1.0.5",
   "main": "src/index.js",
   "description": "React Native Calendar Components",
   "scripts": {
@@ -22,12 +22,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wix/react-native-calendars"
+    "url": "git+https://github.com/AnatolyKazarin/react-native-calendars"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "author": "Wix.com",
+  "contributors": [
+    "Anatoly Kazarin <alkidkaz@gmail.com>",
+    "Gennady Sabirovsky <the@gennadysx.com>"
+  ],
   "license": "MIT",
   "dependencies": {
     "hoist-non-react-statics": "^3.3.1",

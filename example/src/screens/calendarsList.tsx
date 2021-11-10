@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 // @ts-expect-error
-import {CalendarList} from 'react-native-calendars';
-
+import {CalendarList} from '../../../src/index';
 
 const testIDs = require('../testIDs');
 const RANGE = 24;
@@ -18,7 +17,7 @@ const CalendarsList = () => {
       selectedTextColor: 'white'
     }
   };
-  
+
   const onDayPress = day => {
     setSelected(day.dateString);
   };

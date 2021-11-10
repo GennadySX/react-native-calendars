@@ -8,9 +8,8 @@ import {StyleSheet, Animated, TouchableOpacity, View, StyleProp, ViewStyle} from
 import {toMarkingFormat} from '../../interface';
 import {Theme, UpdateSource, DateData} from '../../types';
 import styleConstructor from '../style';
-import CalendarContext from '.';
+import CalendarContext from './index';
 import Presenter from './Presenter';
-
 
 const commons = require('../commons');
 const updateSources = commons.UpdateSources;
@@ -20,9 +19,9 @@ interface Props {
   /** Initial date in 'yyyy-MM-dd' format. Default = Date() */
   date: Date;
   /** Callback for date change event */
-  onDateChanged?: () => Date,
+  onDateChanged?: () => Date;
   /** Callback for month change event */
-  onMonthChange?: () => DateData,
+  onMonthChange?: () => DateData;
   /** Whether to show the today button */
   showTodayButton?: boolean;
   /** Today button's top position */

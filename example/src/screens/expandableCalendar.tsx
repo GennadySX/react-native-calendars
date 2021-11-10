@@ -2,8 +2,7 @@ import _ from 'lodash';
 import React, {Component, useCallback} from 'react';
 import {Platform, StyleSheet, Alert, View, Text, TouchableOpacity, Button} from 'react-native';
 // @ts-expect-error
-import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar} from 'react-native-calendars';
-
+import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar} from '../../../src';
 
 const testIDs = require('../testIDs');
 
@@ -131,7 +130,7 @@ const leftArrowIcon = require('../img/previous.png');
 const rightArrowIcon = require('../img/next.png');
 
 interface Props {
-  weekView?: boolean
+  weekView?: boolean;
 }
 
 export default class ExpandableCalendarScreen extends Component<Props> {
@@ -151,7 +150,7 @@ export default class ExpandableCalendarScreen extends Component<Props> {
   };
 
   renderItem = ({item}: any) => {
-    return <AgendaItem item={item}/>;
+    return <AgendaItem item={item} />;
   };
 
   render() {
@@ -198,7 +197,7 @@ export default class ExpandableCalendarScreen extends Component<Props> {
 }
 
 interface ItemProps {
-  item: any
+  item: any;
 }
 
 const AgendaItem = React.memo(function AgendaItem(props: ItemProps) {
@@ -214,7 +213,7 @@ const AgendaItem = React.memo(function AgendaItem(props: ItemProps) {
   }, []);
 
   if (_.isEmpty(item)) {
-    return(
+    return (
       <View style={styles.emptyItem}>
         <Text style={styles.emptyItemText}>No Events Planned Today</Text>
       </View>
@@ -229,7 +228,7 @@ const AgendaItem = React.memo(function AgendaItem(props: ItemProps) {
       </View>
       <Text style={styles.itemTitleText}>{item.title}</Text>
       <View style={styles.itemButtonContainer}>
-        <Button color={'grey'} title={'Info'} onPress={buttonPressed}/>
+        <Button color={'grey'} title={'Info'} onPress={buttonPressed} />
       </View>
     </TouchableOpacity>
   );
