@@ -215,7 +215,7 @@ const Timeline = ({
         i === start ? null : (
           <View key={`line${i}`} style={[style.line, {top: offset * index, width: dimensionWidth - EVENT_DIFF}]} />
         ),
-        isToday(date) && <NowLine offset={offset / 2} key={`nowLine${i}`} />,
+        isToday(date) && <NowLine offset={offset / 2} key={`nowLine${i}`} color={'#DD6390'} />,
         <View
           key={`lineHalf${i}`}
           style={[style.line, {top: offset * (index + 0.5), width: dimensionWidth - EVENT_DIFF}]}
@@ -272,7 +272,7 @@ const Timeline = ({
         height: event.height,
         width: event.width,
         top: event.top,
-        backgroundColor: event.color ? event.color : '#FEF5EE'
+        backgroundColor: event.color ? event.color : '#FCF3F7'
       };
 
       // Fixing the number of lines for the event title makes this calculation easier.
