@@ -10,9 +10,9 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   PanResponder,
-  Vibration
+  Vibration,
+  TouchableOpacity
 } from 'react-native';
-import {TouchableWithoutFeedback as TouchableButton} from 'react-native-gesture-handler';
 import styleConstructor from './style';
 import populateEvents from './Packer';
 import {isToday} from '../dateutils';
@@ -282,7 +282,12 @@ const Timeline = ({
 
       return (
         <View style={[style.event, style]} key={`event${i}`}>
-          <TouchableButton activeOpacity={0.9} onPress={() => eventTapped && eventTapped(event)} key={i}>
+          <TouchableOpacity
+            style={{height: event.height}}
+            activeOpacity={0.6}
+            onPress={() => eventTapped && eventTapped(event)}
+            key={i}
+          >
             {renderEvent ? (
               renderEvent(event)
             ) : (
@@ -302,7 +307,7 @@ const Timeline = ({
                 ) : null}
               </View>
             )}
-          </TouchableButton>
+          </TouchableOpacity>
         </View>
       );
     });
@@ -407,7 +412,6 @@ const Times = ({top, bottom, start, end, offset, style, format24h}: TimesProps) 
   );
 };
 
-export default React.memo(
-  asCalendarConsumer(Timeline),
-  (prevProps, nextProps) => prevProps.events.length !== nextProps.events.length
+export default React.memo(asCalendarConsumer(Timeline), (prevProps, nextProps) =>
+  _.isEqual(prevProps.events, nextProps.events)
 );
