@@ -584,7 +584,7 @@ export interface TimelineEvent {
   color?: string | undefined;
 }
 
-export interface TimelineProps<T = void> {
+export interface TimelineProps<T> {
   /**
    *  Start time of the timeline. Default = 0
    */
@@ -598,7 +598,7 @@ export interface TimelineProps<T = void> {
   /**
    *  Handler whick gets executed when on event tap. Default = undefined
    */
-  eventTapped?: ((event: TimelineEvent & T) => any) | undefined;
+  eventTapped?: ((event: TimelineEvent | T) => any | void) | undefined;
 
   /**
    *  Time format. Default = true
@@ -608,7 +608,7 @@ export interface TimelineProps<T = void> {
   /**
    *  Array of events. Default = []
    */
-  events?: TimelineEvent[] | undefined;
+  events?: TimelineEvent[] | T | undefined;
 }
 
 export class Timeline extends React.PureComponent<TimelineProps> {}

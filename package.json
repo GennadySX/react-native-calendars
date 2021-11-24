@@ -1,6 +1,6 @@
 {
   "name": "@anatolyk/react-native-calendars",
-  "version": "1.0.5-2",
+  "version": "1.0.5-3",
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "description": "React Native Calendar Components",
