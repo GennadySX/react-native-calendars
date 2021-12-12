@@ -107,6 +107,7 @@ export interface MultiDotMarking {
   disabled?: boolean | undefined;
   dots: CalendarDot[];
   selected?: boolean | undefined;
+  isWorkingDay?: boolean | undefined;
   selectedColor?: string | undefined;
 }
 
