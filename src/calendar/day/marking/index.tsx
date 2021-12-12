@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import React, {Component} from 'react';
-import {View, ViewStyle, TextStyle} from 'react-native';
+import {View, ViewStyle, TextStyle, Text} from 'react-native';
 
 // @ts-expect-error
 import {shouldUpdate, extractComponentProps} from '../../../component-updater';
@@ -18,9 +18,9 @@ export enum MarkingTypes {
 }
 
 type CustomStyle = {
-  container?: ViewStyle,
-  text?: TextStyle
-}
+  container?: ViewStyle;
+  text?: TextStyle;
+};
 
 type DOT = {
   key?: string;
@@ -38,6 +38,7 @@ export interface MarkingProps extends DotProps {
   type?: MarkingTypes;
   theme?: Theme;
   selected?: boolean;
+  isWorkingDay?: boolean;
   marked?: boolean;
   today?: boolean;
   disabled?: boolean;
@@ -61,9 +62,9 @@ export default class Marking extends Component<MarkingProps> {
   static displayName = 'IGNORE';
 
   static markingTypes = MarkingTypes;
-  
+
   style: any;
-  
+
   constructor(props: MarkingProps) {
     super(props);
 
@@ -93,7 +94,9 @@ export default class Marking extends Component<MarkingProps> {
 
     if (items && Array.isArray(items) && items.length > 0) {
       // Filter out items so that we process only those which have color property
-      const validItems = _.filter(items, function(o: DOT | PERIOD) { return o.color; });
+      const validItems = _.filter(items, function (o: DOT | PERIOD) {
+        return o.color;
+      });
 
       return validItems.map((item, index) => {
         return type === MarkingTypes.MULTI_DOT ? this.renderDot(index, item) : this.renderPeriod(index, item);
@@ -131,7 +134,7 @@ export default class Marking extends Component<MarkingProps> {
     if (endingDay) {
       style.push(this.style.endingDay);
     }
-    return <View key={index} style={style}/>;
+    return <View key={index} style={style} />;
   }
 
   renderDot(index?: number, item?: any) {
@@ -147,7 +150,11 @@ export default class Marking extends Component<MarkingProps> {
       color = selected && item.selectedDotColor ? item.selectedDotColor : item.color;
     }
 
-    return <Dot {...dotProps} key={key} color={color} />;
+    return index === 2 ? (
+      <Text style={{fontSize: 9, lineHeight: 8, position: 'absolute', bottom: -3, left: 12}}>+</Text>
+    ) : (
+      <Dot {...dotProps} key={key} color={color} />
+    );
   }
 
   render() {

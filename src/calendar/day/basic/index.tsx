@@ -55,7 +55,6 @@ export default class BasicDay extends Component<BasicDayProps> {
     disableAllTouchEventsForDisabledDays: PropTypes.bool,
     /** Disable all touch events for inactive days. can be override with disableTouchEvent in markedDates*/
     disableAllTouchEventsForInactiveDays: PropTypes.bool
-
   };
 
   style = styleConstructor(this.props.theme);
@@ -103,6 +102,10 @@ export default class BasicDay extends Component<BasicDayProps> {
     return this.marking.selected || this.props.state === 'selected';
   }
 
+  isWorkingDay() {
+    return this.marking.isWorkingDay;
+  }
+
   isDisabled() {
     return typeof this.marking.disabled !== 'undefined' ? this.marking.disabled : this.props.state === 'disabled';
   }
@@ -131,13 +134,17 @@ export default class BasicDay extends Component<BasicDayProps> {
     const {customStyles, selectedColor} = this.marking;
     const style: object[] = [this.style.base];
 
+    if (this.isWorkingDay()) {
+      style.push({backgroundColor: '#EBEBEB', borderRadius: 10});
+    }
+
     if (this.isSelected()) {
       style.push(this.style.selected);
       if (selectedColor) {
         style.push({backgroundColor: selectedColor});
       }
     } else if (this.isToday()) {
-      style.push(this.style.today);
+      style.push([this.style.today, this.isWorkingDay() && {backgroundColor: '#EBEBEB', borderRadius: 10}]);
     }
 
     //Custom marking type
