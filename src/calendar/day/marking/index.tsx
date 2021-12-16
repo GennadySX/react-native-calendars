@@ -151,9 +151,11 @@ export default class Marking extends Component<MarkingProps> {
     }
 
     return index === 2 ? (
-      <Text style={{fontSize: 9, lineHeight: 8, position: 'absolute', bottom: -3, left: 12}}>+</Text>
+      <Text style={{fontSize: 9, lineHeight: 8, position: 'absolute', bottom: -3, left: 12, zIndex: 100}} key={key}>
+        +
+      </Text>
     ) : (
-      <Dot {...dotProps} key={key} color={color} />
+      <Dot {...dotProps} key={key} color={index === 3 ? 'rgba(1,1,1,0)' : color} />
     );
   }
 
